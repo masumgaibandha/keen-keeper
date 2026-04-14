@@ -1,7 +1,7 @@
 import FriendsCard from "./FriendsCard";
 
 const FriendsDetails = async () => {
-  const res = await fetch("http://localhost:3001/friends.json");
+  const res = await fetch("http://localhost:3000/friends.json");
   const friends = await res.json();
   
   return (

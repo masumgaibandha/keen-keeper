@@ -1,11 +1,13 @@
 import Image from "next/image";
 import friendImg from '../../assets/w22.png'
+import Link from "next/link";
 
 const FriendsCard = ({friend}) => {
 
   return (
     <div className="my-6">
       <div className="">
+       <Link href={`/friends/${friend.id}`}>
         <div className="card border border-gray-200 shadow-md">
           <figure className="px-10 pt-10">
             <Image className="rounded-full" width={100} height={100} src={friend.picture} alt="friends-image"></Image>
@@ -27,6 +29,7 @@ const FriendsCard = ({friend}) => {
             </div>
           </div>
         </div>
+       </Link>
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
-import React from "react";
+
 import { HiOutlinePlusSm } from "react-icons/hi";
 
 const BannerPage = async() => {
-    const res = await fetch("http://localhost:3001/friends.json");
+    const res = await fetch("http://localhost:3000/friends.json");
   const friends = await res.json();
   return (
     <div>
