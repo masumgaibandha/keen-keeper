@@ -1,11 +1,14 @@
 import Image from "next/image";
+import BannerPage from "./banner/page";
+import TimeLinePage from "./timeline/page";
+import StatsPage from "./stats/page";
 
 export default function Home() {
   return (
     <div>
-      <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-        To get started, edit the page.js file.
-      </h1>
+      <BannerPage/>
+      <TimeLinePage/>
+      <StatsPage/>
     </div>
   );
 }
