@@ -7,7 +7,7 @@ import { IoMdHome } from "react-icons/io";
 
 const Navbar = () => {
     const pathName = usePathname()
-    console.log("Path Name", pathName)
+    
   const links = (
     <>
       <li> <Link className={pathName === '/' ? 'text-white bg-[#244D3F]' : ''} href={"/"}><IoMdHome size={20} />Home</Link> </li>

@@ -1,14 +1,18 @@
 import Image from "next/image";
-import BannerPage from "./banner/page";
+
 import TimeLinePage from "./timeline/page";
 import StatsPage from "./stats/page";
+import BannerPage from "@/components/banner/page";
+import FriendsDetails from "@/components/FriendsDetails/FriendsDetails";
 
 export default function Home() {
   return (
-    <div>
+    <div  className="w-7xl mx-auto">
       <BannerPage/>
-      <TimeLinePage/>
-      <StatsPage/>
+      <FriendsDetails/>
+      
+      {/* <TimeLinePage/>
+      <StatsPage/> */}
     </div>
   );
 }
