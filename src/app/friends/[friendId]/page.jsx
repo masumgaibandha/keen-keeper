@@ -14,6 +14,13 @@ const FriendsDetailsPage = async ({ params }) => {
   const friends = await res.json();
   const friend = friends.find((item) => item.id === Number(friendId));
 
+  const getStatusColor = (status) => {
+    if (status === "overdue") return "bg-red-400 text-white";
+    if (status === "on track") return "bg-green-400 text-white";
+    if (status === "Almost due") return "bg-yellow-400 text-black";
+    return "bg-gray-300 text-black";
+  };
+
   return (
     <div className="w-7xl mx-auto">
       <div className="grid grid-cols-10 gap-5 my-10">
@@ -31,7 +38,8 @@ const FriendsDetailsPage = async ({ params }) => {
             <h2 className="card-title">{friend.name}</h2>
             <span>
               <div className="flex flex-col justify-center items-center gap-3">
-                <button className="badge rounded-3xl px-5 py-5 bg-[#EFAD44] text-white">
+                <button className={`badge rounded-3xl px-5 py-3 ${getStatusColor(
+                    friend.status)}`}>
                   {friend.status}
                 </button>
 

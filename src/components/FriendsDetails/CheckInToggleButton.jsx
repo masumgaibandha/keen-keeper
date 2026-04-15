@@ -4,11 +4,12 @@ import demoImg from "@/assets/w22.png";
 import callImg from "@/assets/call.png";
 import textImg from "@/assets/text.png";
 import videoImg from "@/assets/video.png";
+import { toast } from "react-toastify";
 
 const CheckInToggleButton = ({ friend }) => {
   const handleCheckIn = (type) => {
     console.log("handle Check in Clicked");
-    alert(`${type} clicked for ${friend.name}`);
+    toast.success(`${type} with ${friend.name}`);
 
     const newEntry = {
       id: Date.now(),

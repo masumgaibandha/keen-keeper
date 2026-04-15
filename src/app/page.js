@@ -6,15 +6,13 @@ import BannerPage from "@/components/banner/page";
 import FriendsDetails from "@/components/FriendsDetails/FriendsDetails";
 import UsersDetailsCard from "@/components/FriendsDetails/UsersDetailsCard";
 
+
 export default function Home() {
   return (
-    <div  className="w-7xl mx-auto">
+    <div  className="">
       <BannerPage/>
       <FriendsDetails/>
-{/*       
       
-      <TimeLinePage/>
-      <StatsPage/> */}
     </div>
   );
 }

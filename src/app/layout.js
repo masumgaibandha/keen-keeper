@@ -1,11 +1,12 @@
-import { Geist } from 'next/font/google'
+import { Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
+import { ToastContainer } from "react-toastify";
 
 const geist = Geist({
-  subsets: ['latin'],
-})
+  subsets: ["latin"],
+});
 
 export const metadata = {
   title: "Keen Keeper",
@@ -16,14 +17,26 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      data-theme = "light"
+      data-theme="light"
       className={`${geist.className} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <Navbar/>
-        {children}
+      <body className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-1 w-full">{children}</main>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
         <Footer/>
-        </body>
+      </body>
     </html>
   );
 }

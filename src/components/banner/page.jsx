@@ -5,7 +5,7 @@ const BannerPage = async() => {
     const res = await fetch("http://localhost:3000/friends.json");
   const friends = await res.json();
   return (
-    <div>
+    <div className="w-7xl mx-auto">
       <div className="text-center space-y-3 py-10">
         <h2 className="text-5xl font-bold  text-[#1F2937]">
           Friends to keep close in your life

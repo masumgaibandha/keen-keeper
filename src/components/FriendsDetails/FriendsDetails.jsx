@@ -5,7 +5,7 @@ const FriendsDetails = async () => {
   const friends = await res.json();
   
   return (
-    <div className="py-6 ">
+    <div className="py-6 w-7xl mx-auto">
       <h2 className="text-2xl font-bold">Your Friends</h2>
       <div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
