@@ -3,7 +3,7 @@ import friendImg from '../../assets/w22.png'
 import Link from "next/link";
 
 const FriendsCard = ({friend}) => {
-
+// Masum
   return (
     <div className="my-6">
       <div className="">
