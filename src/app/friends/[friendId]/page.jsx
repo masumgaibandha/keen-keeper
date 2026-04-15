@@ -1,19 +1,26 @@
-
+import fs from "fs/promises";
+import path from "path";
 import Image from "next/image";
 import { HiOutlineBellSnooze } from "react-icons/hi2";
 import { FiArchive } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
 import CheckInToggleButton from "@/components/FriendsDetails/CheckInToggleButton";
 
-
 const FriendsDetailsPage = async ({ params }) => {
   const { friendId } = await params;
- 
 
-  const res = await fetch("http://localhost:3000/friends.json");
-  const friends = await res.json();
+
+  const filePath = path.join(process.cwd(), "public", "friends.json");
+  const jsonData = await fs.readFile(filePath, "utf-8");
+  const friends = JSON.parse(jsonData);
+
   const friend = friends.find((item) => item.id === Number(friendId));
 
+  if (!friend) {
+    return <div className="p-10 text-center">Friend not found</div>;
+  }
+
+ 
   const getStatusColor = (status) => {
     if (status === "overdue") return "bg-red-400 text-white";
     if (status === "on track") return "bg-green-400 text-white";
@@ -22,117 +29,116 @@ const FriendsDetailsPage = async ({ params }) => {
   };
 
   return (
-    <div className="w-7xl mx-auto">
-      <div className="grid grid-cols-10 gap-5 my-10">
-        <div className="card border border-gray-200 shadow-md col-span-3 ">
+    <div className="max-w-7xl mx-auto px-4">
+      <div className="grid grid-cols-1 md:grid-cols-10 gap-5 my-10">
+        {/* LEFT CARD */}
+        <div className="card border shadow-md md:col-span-3">
           <figure className="px-10 pt-10">
             <Image
               className="rounded-full"
               width={100}
               height={100}
               src={friend.picture}
-              alt="friends-image"
-            ></Image>
+              alt="friend"
+            />
           </figure>
+
           <div className="card-body items-center text-center">
             <h2 className="card-title">{friend.name}</h2>
-            <span>
-              <div className="flex flex-col justify-center items-center gap-3">
-                <button className={`badge rounded-3xl px-5 py-3 ${getStatusColor(
-                    friend.status)}`}>
-                  {friend.status}
-                </button>
 
-                <div>
-                    {
-                    friend.tags.map((tag, index)=><button key={index} className=" badge px-5 py-3 bg-[#CBFADB] text-[#244D3F]">
-                {tag}
-                </button>)
-                  }
-                </div>
+            <div className="flex flex-col items-center gap-3">
+              <button
+                className={`badge rounded-3xl px-5 py-3 ${getStatusColor(
+                  friend.status,
+                )}`}
+              >
+                {friend.status}
+              </button>
+
+              <div className="flex flex-wrap justify-center gap-2">
+                {friend.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="badge px-5 py-3 bg-[#CBFADB] text-[#244D3F]"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
-              <p className="py-3">{friend.bio}</p>
-              <span>{friend.email}</span>
-              
-            </span>
+            </div>
+
+            <p className="py-3">{friend.bio}</p>
+            <p className="text-sm text-gray-500">{friend.email}</p>
           </div>
+
           <div className="divider"></div>
-          <div className="card border border-gray-200 shadow-md text-center py-3 ">
-            <span>
-              <HiOutlineBellSnooze className="mx-auto inline" /> Snooze 2 weeks
-            </span>
-          </div>
-          <div className="card border border-gray-200 shadow-md text-center py-3 ">
-            <span>
-              <FiArchive className="mx-auto inline" /> Archive
-            </span>
-          </div>
-          <div className="card border border-gray-200 shadow-md text-center py-3 ">
-            <span>
-              <MdOutlineDelete
-                color="red"
-                size={20}
-                className="mx-auto inline"
-              />{" "}
-              Delete
-            </span>
+
+          {/* ACTIONS */}
+          <div className="space-y-2 px-4 pb-4">
+            <div className="card border text-center py-3">
+              <span>
+                <HiOutlineBellSnooze className="inline mr-2" />
+                Snooze 2 weeks
+              </span>
+            </div>
+
+            <div className="card border text-center py-3">
+              <span>
+                <FiArchive className="inline mr-2" />
+                Archive
+              </span>
+            </div>
+
+            <div className="card border text-center py-3">
+              <span className="text-red-500">
+                <MdOutlineDelete className="inline mr-2" />
+                Delete
+              </span>
+            </div>
           </div>
         </div>
 
-        <div className="my-10 col-span-7 ">
-          <div className="grid md:grid-cols-3 mb-5 gap-3">
-            <div className="card border border-gray-300 shadow-sm ">
-              <div className="card-body">
-                <span className="text-3xl font-bold text-center  text-[#244D3F]">
-                  62
-                </span>
-                <p className="text-xl text-center text-[#64748B]">
-                  Days Since Contact
-                </p>
-              </div>
+        {/* RIGHT SECTION */}
+        <div className="md:col-span-7 space-y-6">
+          {/* STATS */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="card border shadow-sm text-center p-5">
+              <p className="text-3xl font-bold text-[#244D3F]">
+                {friend.days_since_contact}
+              </p>
+              <p className="text-[#64748B]">Days Since Contact</p>
             </div>
 
-            <div className="card border border-gray-300 shadow-sm ">
-              <div className="card-body">
-                <span className="text-3xl font-bold text-center  text-[#244D3F]">
-                  30
-                </span>
-                <p className="text-xl text-center text-[#64748B]">
-                  Goal (Days)
-                </p>
-              </div>
+            <div className="card border shadow-sm text-center p-5">
+              <p className="text-3xl font-bold text-[#244D3F]">{friend.goal}</p>
+              <p className="text-[#64748B]">Goal (Days)</p>
             </div>
 
-            <div className="card border border-gray-300 shadow-sm ">
-              <div className="card-body">
-                <span className="text-3xl font-bold text-center  text-[#244D3F]">
-                  Feb 27, 2026
-                </span>
-                <p className="text-xl text-center text-[#64748B]">Next Due</p>
-              </div>
+            <div className="card border shadow-sm text-center p-5">
+              <p className="text-xl font-bold text-[#244D3F]">
+                {friend.next_due_date}
+              </p>
+              <p className="text-[#64748B]">Next Due</p>
             </div>
           </div>
 
-          <div className="card border border-gray-300 shadow-sm ">
-            <div className=" p-10 border border-gray-300 shadow-sm flex justify-between items-center">
-              <div className="">
-                <span className="text-xl font-bold text-center  text-[#244D3F]">
-                  Relationship Goal
-                </span>
-                <p className="text-xl text-center text-[#64748B]">
-                  Connect every 30 days
-                </p>
-              </div>
-              <button className="btn">Edit</button>
+          {/* GOAL */}
+          <div className="card border shadow-sm flex flex-col sm:flex-row justify-between items-center p-6 gap-4">
+            <div>
+              <p className="font-bold text-[#244D3F]">Relationship Goal</p>
+              <p className="text-[#64748B]">Connect every {friend.goal} days</p>
             </div>
+            <button className="btn">Edit</button>
           </div>
 
-          <h2 className="py-5 text-2xl font-bold">Quick Check-In</h2>           
-                  <CheckInToggleButton friend={friend}></CheckInToggleButton>        
+          {/* CHECK-IN */}
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Quick Check-In</h2>
+            <CheckInToggleButton friend={friend} />
           </div>
         </div>
       </div>
-   
+    </div>
   );
 };
 

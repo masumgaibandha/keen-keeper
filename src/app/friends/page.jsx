@@ -1,12 +1,15 @@
+import fs from "fs/promises";
+import path from "path";
 import Image from "next/image";
 import Link from "next/link";
 
 const FriendsPage = async () => {
-  const res = await fetch("http://localhost:3000/friends.json");
-  const friends = await res.json();
+  const filePath = path.join(process.cwd(), "public", "friends.json");
+  const jsonData = await fs.readFile(filePath, "utf-8");
+  const friends = JSON.parse(jsonData);
 
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 w-7xl mx-auto my-6">
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto my-6 px-4">
       {friends.map((friend) => {
         return (
           <div key={friend.id}>
@@ -19,12 +22,14 @@ const FriendsPage = async () => {
                     height={100}
                     src={friend.picture}
                     alt="friends-image"
-                  ></Image>
+                  />
                 </figure>
+
                 <div className="card-body items-center text-center">
                   <h2 className="card-title">{friend.name}</h2>
                   <span>{friend.days_since_contact} d ago</span>
-                  <div className="card-actions">
+
+                  <div className="card-actions flex flex-wrap justify-center">
                     {friend.tags.map((tag, index) => (
                       <button
                         key={index}
@@ -34,6 +39,7 @@ const FriendsPage = async () => {
                       </button>
                     ))}
                   </div>
+
                   <div className="card-actions">
                     <button className="badge rounded-3xl px-5 py-5 bg-[#EFAD44] text-white">
                       {friend.status}
