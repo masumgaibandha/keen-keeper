@@ -1,16 +1,14 @@
-import demoImg from "@/assets/w22.png";
-import callImg from "@/assets/call.png";
-import textImg from "@/assets/text.png";
-import videoImg from "@/assets/video.png";
+
 import Image from "next/image";
 import { HiOutlineBellSnooze } from "react-icons/hi2";
 import { FiArchive } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
+import CheckInToggleButton from "@/components/FriendsDetails/CheckInToggleButton";
 
 
 const FriendsDetailsPage = async ({ params }) => {
   const { friendId } = await params;
-  console.log("Show friends Id", friendId);
+ 
 
   const res = await fetch("http://localhost:3000/friends.json");
   const friends = await res.json();
@@ -74,7 +72,7 @@ const FriendsDetailsPage = async ({ params }) => {
         </div>
 
         <div className="my-10 col-span-7 ">
-          <div className="grid md:grid-cols-3 mb-5">
+          <div className="grid md:grid-cols-3 mb-5 gap-3">
             <div className="card border border-gray-300 shadow-sm ">
               <div className="card-body">
                 <span className="text-3xl font-bold text-center  text-[#244D3F]">
@@ -120,56 +118,13 @@ const FriendsDetailsPage = async ({ params }) => {
               <button className="btn">Edit</button>
             </div>
           </div>
-          <h2 className="py-5 text-2xl font-bold">Quick Check-In</h2>
-          <div className="grid md:grid-cols-3 ">
-            <div className="card border border-gray-300 shadow-sm ">
-              <div className="card-body">
-                <span className="text-3xl font-bold text-center  text-[#244D3F]">
-                  <Image
-                    width={30}
-                    height={30}
-                    src={callImg}
-                    className="mx-auto"
-                    alt="call image"
-                  ></Image>
-                </span>
-                <p className="text-xl text-center text-[#64748B]">Call</p>
-              </div>
-            </div>
 
-            <div className="card border border-gray-300 shadow-sm ">
-              <div className="card-body">
-                <span className="text-3xl font-bold text-center  text-[#244D3F]">
-                  <Image
-                    width={30}
-                    height={30}
-                    src={textImg}
-                    className="mx-auto"
-                    alt="call image"
-                  ></Image>
-                </span>
-                <p className="text-xl text-center text-[#64748B]">Text</p>
-              </div>
-            </div>
-
-            <div className="card border border-gray-300 shadow-sm ">
-              <div className="card-body">
-                <span className="text-3xl font-bold text-center  text-[#244D3F]">
-                  <Image
-                    width={30}
-                    height={30}
-                    src={videoImg}
-                    className="mx-auto"
-                    alt="call image"
-                  ></Image>
-                </span>
-                <p className="text-xl text-center text-[#64748B]">Video</p>
-              </div>
-            </div>
+          <h2 className="py-5 text-2xl font-bold">Quick Check-In</h2>           
+                  <CheckInToggleButton friend={friend}></CheckInToggleButton>        
           </div>
         </div>
       </div>
-    </div>
+   
   );
 };
 

@@ -11,9 +11,9 @@ export default function Home() {
     <div  className="w-7xl mx-auto">
       <BannerPage/>
       <FriendsDetails/>
-      <UsersDetailsCard/>
+{/*       
       
-      {/* <TimeLinePage/>
+      <TimeLinePage/>
       <StatsPage/> */}
     </div>
   );
